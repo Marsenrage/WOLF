@@ -10,7 +10,7 @@ from sklearn import *
 from sklearn import metrics
 from sklearn.metrics import *
 from sklearn.naive_bayes import MultinomialNB
-
+from sklearn.naive_bayes import GaussianNB
 
 ##############################################################################################################
 # Function to convert strings in raw data to int and return a list and its element are 
@@ -75,10 +75,7 @@ parser.add_argument("-t", type=str, nargs= 1, dest = 'test', required = True,
                     help="testing data set")
 parser.add_argument("-O", type=str, nargs= 1, dest = 'out_file',required = True,
                     help="output predictions file name")
-parser.add_argument("-w", type=str, choices=['svm', 'rfc', 'nb'],
-                   nargs = 1, required = True, dest ='classifiers', help="classifier to use.")
-parser.add_argument("-o", nargs = '*', type = str, dest = 'para',
-                    help="classifier options")
+
 args = parser.parse_args()
 ######################################################################################################################
 # obtain train and test data
@@ -96,9 +93,8 @@ y_test = test[2]
 ######################################################################################################################
 #classifiers
 
-if args.classifiers[0] == 'nb':
-    clf = MultinomialNB()
-    #print clf
+clf = MultinomialNB()
+#print clf
 
 clf.fit(x_train, y_train)
 y_label = clf.predict(x_test)
@@ -134,4 +130,24 @@ for i in range(len(x_test)):
 		print a
 
 '''
+###############################################################################################
+#result test]
+
+count = 0 
+for i in range (len(y_label)):
+	if y_label[i] == y_test[i]:
+		count += 1
+
+'''
+c = float(count)/float(len(y_label))
+print "\n"
+print "###########################################################"
+print "Correctly Classified Instances :\t%d\t%0.4f%%" %(count,c*100)
+print "Incorrectly Classified Instances :\t%d\t%0.4f%%" %(len(y_label) - count,(1-c)*100)
+print "Total number of Instances :\t\t%d" %(len(y_label))
+print "###########################################################"
+print "\n"
+'''
+
+
 
