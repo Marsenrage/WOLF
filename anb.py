@@ -112,7 +112,6 @@ for i in range(len(x_test)):
 		prob = clf.predict_proba(x_test[i])
 		p[i][j] = str("{:.5f}".format(prob[0][j]))
 
-
 with open(args.out_file[0],"w") as f:
 	f.write('---\n')
 	for i in range(len(clf.classes_)):
@@ -121,7 +120,8 @@ with open(args.out_file[0],"w") as f:
 			f.write('     - '+p[j][i]+ "\n")
 f.close()
 
-
+###############################################################################################
+#result test
 '''
 test whether the sum of the prob of each class in ith entry is equal to 1
 for i in range(len(x_test)):
@@ -129,16 +129,11 @@ for i in range(len(x_test)):
 		a= float(p[i][0])+ float(p[i][1])+ float(p[i][2])+ float(p[i][3])+ float(p[i][4])+ float(p[i][5])+ float(p[i][6])+ float(p[i][7])+ float(p[i][8])+ float(p[i][9])
 		print a
 
-'''
-###############################################################################################
-#result test]
-
 count = 0 
 for i in range (len(y_label)):
 	if y_label[i] == y_test[i]:
 		count += 1
 
-'''
 c = float(count)/float(len(y_label))
 print "\n"
 print "###########################################################"
