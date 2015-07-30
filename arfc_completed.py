@@ -126,7 +126,7 @@ if args.njobs< -1:
 	parser.error('-j: The number of jobs to run must be -1 or integer greater than 0')
 if args.njobs==0:
 	parser.error('-j: The number of jobs to run must be -1 or integer greater than 0')
-
+'''
 print args.numOfTrees
 print type(args.numOfTrees)
 print args.maxDepth
@@ -137,7 +137,7 @@ print args.njobs
 print type(args.njobs)
 print args.features
 print type(args.features)
-
+'''
 
 ######################################################################################################################
 # obtain train and test data
