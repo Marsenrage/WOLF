@@ -88,7 +88,8 @@ parser.add_argument("-r", type=int, dest = 'randomState',
 parser.add_argument("-j", type=int, dest = 'njobs',
                     help="The number of jobs to run in parallel for both fit and predict.default= 1 ", default= 1 )
 
-parser.add_argument("-f", dest = 'features', help="the number of features to consider when looking for the best split.default= auto", default= 'auto', type = str )
+parser.add_argument("-f", dest = 'features', help="the number of features to consider when looking for the best split.default= auto.value could be int, float and ['auto', 'log2', 'sqrt']", default= 'auto', type = str )
+
 args = parser.parse_args()
 
 # validation -f
@@ -97,12 +98,34 @@ if re.match("^\d+?\.\d+$", args.features)or re.match("^\.\d+$", args.features):
 	if not 0<features<1:
 		parser.error('floats must between (0,1)')
 elif re.match("^\d+?$", args.features):
+
 	features = int(args.features)
+elif re.match("^\-\d+?$", args.features):
+	parser.error('value should not be less than 0')
 elif args.features not in ['auto', 'log2', 'sqrt']: 
 	parser.error('value should be select from \'auto\', \'log2\' or \'sqrt\'')
 else:
 	features = args.features
 
+# validation -n
+if args.numOfTrees<= 0:
+	parser.error('-n: The number of trees in the forest must be integer greater than zero')
+
+# validation -d
+if args.maxDepth!= None:
+	 if args.maxDepth<= 0:
+		parser.error('-d: The maximum depth of the tree must be integer greater than zero')
+
+# validation -r 
+if args.randomState!= None:
+	 if args.randomState<= 0:
+		parser.error('-r: The random state must be integer greater than zero')
+
+# validation -j 
+if args.njobs< -1:
+	parser.error('-j: The number of jobs to run must be -1 or integer greater than 0')
+if args.njobs==0:
+	parser.error('-j: The number of jobs to run must be -1 or integer greater than 0')
 
 print args.numOfTrees
 print type(args.numOfTrees)
